@@ -3,7 +3,7 @@ local hintmsg = Instance.new("Hint", game.CoreGui)
 local attempt = tick()
 hintmsg.Text = "Initializing UI Library This Can Take Up To 30 Seconds"
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zerovectors/framework/master/vect0rs%20hub%20framework%20uwuware%20checkmarks", true))()
-local version = "1"
+local version = "1.1"
 local uiname = "Shoot Out"
 local ui = { }
 local main = { }
@@ -221,6 +221,7 @@ do -- main
             Settings.infammo = library.flags.infammo
             Settings.nospread = library.flags.nospread
             Settings.norecoil = library.flags.norecoil
+            Settings.noreload = library.flags.noreload
         end
         do -- ui settings
             Settings.annoyshit = library.flags.annoyshit
@@ -257,6 +258,7 @@ do -- main
             ui.miscellaneous.infammo:SetState(Settings.infammo)
             ui.miscellaneous.nospread:SetState(Settings.nospread)
             ui.miscellaneous.norecoil:SetState(Settings.norecoil)
+            ui.miscellaneous.noreload:SetState(Settings.noreload)
         end
         do -- ui settings
             main.uisettings.annoyingstuff:SetState(Settings.annoyshit)
@@ -1193,6 +1195,7 @@ do -- main
                 main.guntables[v.Name..".FireRate"] = p.Settings.ROF
                 main.guntables[v.Name..".Damage"] = p.Settings.MAX_DAMAGE
                 main.guntables[v.Name..".InfStamina"] = p.Settings.STAMINA_GAIN_RATE
+                main.guntables[v.Name..".Reload"] = p.Settings.RELOAD_TIME
             end
         end
     end
@@ -1257,6 +1260,18 @@ do -- main
                     p.Settings.RECOIL_STRENGTH = 0
                 else
                     p.Settings.RECOIL_STRENGTH = main.guntables[v.Name..".Recoil"]
+                end
+            end
+        end
+    end
+    function main:NoReload()
+        for i,v in pairs(game:GetService("ReplicatedFirst")["_0xS0URC3X"].Shared.WeaponDataManager:GetChildren()) do
+            if v.ClassName == "ModuleScript" then
+                local p = require(v)
+                if library.flags.noreload then
+                    p.Settings.RELOAD_TIME = 0
+                else
+                    p.Settings.RELOAD_TIME = main.guntables[v.Name..".Reload"]
                 end
             end
         end
@@ -1649,6 +1664,10 @@ do -- ui
             ui.miscellaneous.norecoil = ui.miscellaneous.gunmods:AddToggle({text = "No Recoil", flag = "norecoil", callback = function(a)
                 library.flags.norecoil = a
                 main:NoRecoil()
+            end})
+            ui.miscellaneous.noreload = ui.miscellaneous.gunmods:AddToggle({text = "No Reload", flag = "noreload", callback = function(a)
+                library.flags.noreload = a
+                main:NoReload()
             end})
             ui.miscellaneous:AddButton({text = "ReJoin", callback = function()
                 main:ReJoin()
