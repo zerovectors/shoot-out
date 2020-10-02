@@ -1207,6 +1207,7 @@ do -- main
             ui.miscellaneous.infammo:SetState(true)
             ui.miscellaneous.nospread:SetState(true)
             ui.miscellaneous.norecoil:SetState(true)
+            ui.miscellaneous.noreload:SetState(true)
         else
             ui.miscellaneous.automatic:SetState(false)
             ui.miscellaneous.rapidfire:SetState(false)
@@ -1214,6 +1215,7 @@ do -- main
             ui.miscellaneous.infammo:SetState(false)
             ui.miscellaneous.nospread:SetState(false)
             ui.miscellaneous.norecoil:SetState(false)
+            ui.miscellaneous.noreload:SetState(false)
         end
     end
     function main:Automatic()
