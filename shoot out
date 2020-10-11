@@ -1710,8 +1710,17 @@ do -- ui
         end
         do -- ui settings
             main.uisettings = library:CreateWindow("UI Settings")
-            main.uisettings:AddColor({text = "Cursor Color", flag = "cursorcolor", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            main.uisettings:AddColor({text = "Cursor Color", flag = "cursorcolor", color = Color3.fromRGB(255, 51, 255), callback = function(a)
                 main:cursorcolor(a)
+            end})
+            main.uisettings:AddColor({text = "Main Color", color = Color3.fromRGB(255, 51, 255), callback = function(a)
+                getrenv().ui_settings.main_colour = a
+            end})
+            main.uisettings:AddSlider({text = "Title Size", value = 17, min = 10, max = 25, callback = function(a)
+                getrenv().ui_settings.title_size = a
+            end})
+            main.uisettings:AddSlider({text = "Text Size", value = 16, min = 10, max = 25, callback = function(a)
+                getrenv().ui_settings.font_size = a
             end})
             if getrenv().creator_accounts[MyPlr.UserId] or getrenv().admin_accounts[MyPlr.UserId] then
                 main.uisettings.annoyingstuff = main.uisettings:AddToggleFolder({text = "Shit Smail Hates!", state = true, flag = "annoyshit", callback = function(a)
@@ -1742,7 +1751,7 @@ do -- ui
                 main:DeleteSettings()
             end})
             main.topbar = main.uisettings:AddFolder("Top Bar")
-            main.topbar:AddColor({text = "Line Colour", flag = "color", color = Color3.fromRGB(221, 3, 255), callback = function(a)
+            main.topbar:AddColor({text = "Line Colour", flag = "color", color = Color3.fromRGB(255, 51, 255), callback = function(a)
                 main:splitlinecolor(a)
             end})
             main.topbar:AddSlider({text = "Transparency", value = 0, min = 0, max = 1, float = 0.1, callback = function(a)
